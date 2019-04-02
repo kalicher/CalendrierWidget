@@ -4,8 +4,9 @@ class Main {
 	
 	constructor() {
 		this._name = "dash";
-		let widget = new LeMondeWidget(1, this);
+		let widget = new CalenderWidget(1, this);
 		document.body.appendChild(widget.view.stage);
+
 	}
 	
 	async get(url) {
