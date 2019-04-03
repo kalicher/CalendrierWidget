@@ -45,7 +45,7 @@ class CalenderView extends WidgetView {
 	update(a,b){
 	console.log(a,b);
 		this.affiche.textContent = a;
-		this.affiche.setAttribute("href",b);
+		HH.attr(this.affiche,{"href":hhtb});
 }
 	draw() {
 		super.draw();
@@ -89,6 +89,7 @@ class CalenderController extends WidgetController {
 		let parser = new DOMParser(); // init dom parser
 		let dom = parser.parseFromString(domstr, "text/html"); // inject result
 		let article = new xph().doc(dom).ctx(dom).craft('//*[@id="en-continu"]div[3]/div[3]/div[4]/div/ul[1]/li').firstResult; // find interesting things
+		console.log (article);
 		this.mvc.view.update(article.textContent, article.getAttribute("href"));
 	}
 	
