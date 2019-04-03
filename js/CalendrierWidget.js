@@ -43,9 +43,10 @@ class CalenderView extends WidgetView {
 	}
 	
 	update(a,b){
+	console.log(a,b);
 		this.affiche.textContent = a;
 		this.affiche.setAttribute("href",b);
-	}
+}
 	draw() {
 		super.draw();
        SS.style(this.header,{"backgroundColor": "red"});
