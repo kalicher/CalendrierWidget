@@ -82,7 +82,7 @@ class CalenderController extends WidgetController {
 		let domstr = _atob(result.response.dom); // decode result
 		let parser = new DOMParser(); // init dom parser
 		let dom = parser.parseFromString(domstr, "text/html"); // inject result
-		let article = new xph().ctx(dom).craft('/html/body/div[3]/div[3]/div[4]/div/ul[1]/li').firstResult; // find interesting things
+		let article = new xph().ctx(dom).craft('//*[@id="en-continu"]div[3]/div[3]/div[4]/div/ul[1]/li').firstResult; // find interesting things
 		this.mvc.view.update(article.textContent, article.getAttribute("href"));
 	}
 	
