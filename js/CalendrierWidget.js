@@ -48,6 +48,7 @@ class CalenderView extends WidgetView {
 		 let months= ["janvier", "février" ,"mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 		let days=["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI", "DIMANCHE"];
       let a = new Date();
+      //jour 25 mois année
 		this.try.date= [days[a.getDay() -1],a.getDate(),months[a.getMonth()],a.getFullYear()];
 		this.b = HH.create("div");
 		this.b.textContent = ""+this.try.date[1] //+ this.try.date[1] + this.try.date[2];
@@ -74,11 +75,14 @@ class CalenderController extends WidgetController {
 	}
 	
 	async load() {
-		let result = await this.mvc.main.dom("https://fr.wikipedia.org/wiki/"); // load web page
+	let jours ="" + this.mvc.view.try.date[1]+"_"+ this.mvc.view.try.date[2];
+	console.log(jours);
+
+		let result = await this.mvc.main.dom("https://fr.wikipedia.org/wiki/"+jours); // load web page
 		let domstr = _atob(result.response.dom); // decode result
 		let parser = new DOMParser(); // init dom parser
 		let dom = parser.parseFromString(domstr, "text/html"); // inject result
-		let article = new xph().ctx(dom).craft('//*[@id="en-continu"]/div/ul/li[1]/a').firstResult; // find interesting things
+		let article = new xph().ctx(dom).craft('/html/body/div[3]/div[3]/div[4]/div/ul[1]/li').firstResult; // find interesting things
 		this.mvc.view.update(article.textContent, article.getAttribute("href"));
 	}
 	
