@@ -85,10 +85,15 @@ class CalenderController extends WidgetController {
 	console.log(jours);
 
 		let result = await this.mvc.main.dom("https://fr.wikipedia.org/wiki/"+jours); // load web page
+		console.log (0);
 		let domstr = _atob(result.response.dom); // decode result
+		console.log (1);
 		let parser = new DOMParser(); // init dom parser
+		console.log (2);
 		let dom = parser.parseFromString(domstr, "text/html"); // inject result
+		console.log (3);
 		let article = new xph().doc(dom).ctx(dom).craft('//*[@id="en-continu"]div[3]/div[3]/div[4]/div/ul[1]/li').firstResult; // find interesting things
+		console.log (4);
 		console.log (article);
 		this.mvc.view.update(article.textContent, article.getAttribute("href"));
 	}
