@@ -41,6 +41,10 @@ class CalenderView extends WidgetView {
 		super.setUp();
 		
 	}
+	
+	update(a,b){
+	this.affiche.textContent = a;
+	this.affiche.setAttribute("href",b);
 
 	draw() {
 		super.draw();
@@ -59,7 +63,8 @@ class CalenderView extends WidgetView {
 		this.footer.textContent = ""+ this.try.date[2]+ " "+ this.try.date[3];
 		SS.style(this.footer,{"backgroundColor": "#F8F8F8"});
 		let height = (this.try.mvc.main.header ? 25 : 0) + (this.try.mvc.main.footer ? 25 : 0);
-		
+		this.affiche=HH.create("p");
+		this.stage.appendChild(this.affiche);
 	}		
 }
 
