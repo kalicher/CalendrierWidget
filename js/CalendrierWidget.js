@@ -90,7 +90,7 @@ class CalenderController extends WidgetController {
 		let dom = parser.parseFromString(domstr, "text/html"); // inject result
 		console.log("load wiki");
 		let article = new xph().doc(dom).ctx(dom).craft('//*[@id="mw-content-text"]/div/ul/li').allResults;
-		console.log(article);
+		console.log(article[0].innerText);
 		// piocher un élément au hasard
 		// récupérer le texte de l'élément
 		// afficher
