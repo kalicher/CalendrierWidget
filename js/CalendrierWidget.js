@@ -84,7 +84,7 @@ class CalenderController extends WidgetController {
 	
 	async load() {
 		this.jours ="" + this.mvc.view.try.date[1]+"_"+ this.mvc.view.try.date[2];
-		console.log(jours);
+		console.log(this.jours);
 		let result = await this.mvc.main.dom("https://fr.wikipedia.org/wiki/"+this.jours); // load web page
 		let domstr = _atob(result.response.dom); // decode result
 		let parser = new DOMParser(); // init dom parser
