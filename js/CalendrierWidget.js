@@ -58,14 +58,15 @@ class CalenderView extends WidgetView {
 		this.try.date= [days[a.getDay() -1],a.getDate(),months[a.getMonth()],a.getFullYear()];
 		this.b = HH.create("div");
 		this.b.textContent = ""+this.try.date[1] //+ this.try.date[1] + this.try.date[2];
-		SS.style(this.b,{"fontSize":"50px","textAlign":"center","height":"100px", "line-height" : "95px" });
-		//this.stage.appendChild(this.b);
+		SS.style(this.b,{"fontSize":"50px","width" : "50%","textAlign":"center","height":"100px", "line-height" : "95px" });
+		this.stage.appendChild(this.b);
 		this.header.textContent = ""+this.try.date[0]
 		SS.style(this.stage,{"backgroundColor": "#F8F8F8"});
 		this.footer.textContent = ""+ this.try.date[2]+ " "+ this.try.date[3];
 		SS.style(this.footer,{"backgroundColor": "#F8F8F8"});
 		let height = (this.try.mvc.main.header ? 25 : 0) + (this.try.mvc.main.footer ? 25 : 0);
 		this.affiche=HH.create("a");
+		SS.style(this.affiche, {"width" : "50%", "fontSize" : "10px"});
 		this.stage.appendChild(this.affiche);
 	}		
 }
