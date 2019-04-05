@@ -43,10 +43,10 @@ class CalenderView extends WidgetView {
 	}
 	
 	update(a,b){
-	console.log(a,b);
+		console.log(a,b);
 		this.affiche.textContent = a;
 		console.log(this.affiche.textContent);
-		HH.attr(this.affiche,{"href":"https://fr.wikipedia.org/wiki/"+this.jours});
+		HH.attr(this.affiche,{"href":"https://fr.wikipedia.org/wiki/"+b});
 }
 	draw() {
 		super.draw();
@@ -65,7 +65,7 @@ class CalenderView extends WidgetView {
 		this.footer.textContent = ""+ this.try.date[2]+ " "+ this.try.date[3];
 		SS.style(this.footer,{"backgroundColor": "#F8F8F8"});
 		let height = (this.try.mvc.main.header ? 25 : 0) + (this.try.mvc.main.footer ? 25 : 0);
-		this.affiche=HH.create("p");
+		this.affiche=HH.create("a");
 		this.stage.appendChild(this.affiche);
 	}		
 }
@@ -96,7 +96,7 @@ class CalenderController extends WidgetController {
 		// piocher un élément au hasard
 		// récupérer le texte de l'élément
 		// afficher
-		this.mvc.view.update(article[0].innerText);
+		this.mvc.view.update(article[0].innerText, this.jours);
 	}
 	
 }
