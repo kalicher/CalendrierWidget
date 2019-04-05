@@ -45,6 +45,7 @@ class CalenderView extends WidgetView {
 	update(a,b){
 	console.log(a,b);
 		this.affiche.textContent = a;
+		console.log(this.affiche.textContent);
 		HH.attr(this.affiche,{"href":"https://fr.wikipedia.org/wiki/"+this.jours});
 }
 	draw() {
