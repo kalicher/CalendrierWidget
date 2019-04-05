@@ -58,7 +58,7 @@ class CalenderView extends WidgetView {
 		this.try.date= [days[a.getDay() -1],a.getDate(),months[a.getMonth()],a.getFullYear()];
 		this.b = HH.create("div");
 		this.b.textContent = ""+this.try.date[1] //+ this.try.date[1] + this.try.date[2];
-		SS.style(this.b,{"fontSize":"100px","textAlign":"center","height":"125px", "line-height" : "95px" });
+		SS.style(this.b,{"fontSize":"100px","textAlign":"center","height":"100px", "line-height" : "95px" });
 		this.stage.appendChild(this.b);
 		this.header.textContent = ""+this.try.date[0]
 		SS.style(this.stage,{"backgroundColor": "#F8F8F8"});
@@ -91,12 +91,12 @@ class CalenderController extends WidgetController {
 		let dom = parser.parseFromString(domstr, "text/html"); // inject result
 		console.log("load wiki");
 		let article = new xph().doc(dom).ctx(dom).craft('//*[@id="mw-content-text"]/div/ul/li').allResults;
-		console.log(article[0].innerText);
+		
 		
 		// piocher un élément au hasard
 		// récupérer le texte de l'élément
 		// afficher
-		this.mvc.view.update("le texte");
+		this.mvc.view.update(article[0].innerText);
 	}
 	
 }
