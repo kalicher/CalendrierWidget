@@ -92,7 +92,7 @@ class CalenderController extends WidgetController {
 		// piocher un élément au hasard
 		// récupérer le texte de l'élément
 		// afficher
-		this.mvc.view.update("le texte");
+		this.mvc.view.update(article[Math.floor(Math.random()) * article.length].innerText);
 	}
 	
 }
