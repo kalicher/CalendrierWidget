@@ -45,7 +45,7 @@ class CalenderView extends WidgetView {
 	update(a,b){
 	console.log(a,b);
 		this.affiche.textContent = a;
-		HH.attr(this.affiche,{"href":hhtb});
+		HH.attr(this.affiche,{"href":"https://fr.wikipedia.org/wiki/"+this.jours});
 }
 	draw() {
 		super.draw();
@@ -82,15 +82,16 @@ class CalenderController extends WidgetController {
 	
 	
 	async load() {
-		let jours ="" + this.mvc.view.try.date[1]+"_"+ this.mvc.view.try.date[2];
+		this.jours ="" + this.mvc.view.try.date[1]+"_"+ this.mvc.view.try.date[2];
 		console.log(jours);
-		let result = await this.mvc.main.dom("https://fr.wikipedia.org/wiki/"+jours); // load web page
+		let result = await this.mvc.main.dom("https://fr.wikipedia.org/wiki/"+this.jours); // load web page
 		let domstr = _atob(result.response.dom); // decode result
 		let parser = new DOMParser(); // init dom parser
 		let dom = parser.parseFromString(domstr, "text/html"); // inject result
 		console.log("load wiki");
 		let article = new xph().doc(dom).ctx(dom).craft('//*[@id="mw-content-text"]/div/ul/li').allResults;
 		console.log(article[0].innerText);
+		
 		// piocher un élément au hasard
 		// récupérer le texte de l'élément
 		// afficher
