@@ -66,7 +66,7 @@ class CalenderView extends WidgetView {
 		SS.style(this.footer,{"backgroundColor": "#F8F8F8"});
 		let height = (this.try.mvc.main.header ? 25 : 0) + (this.try.mvc.main.footer ? 25 : 0);
 		this.affiche=HH.create("a");
-		SS.style(this.affiche, {"width" : "50%", "float" : "left", "fontSize" : "10px", "position": "relative","top": "-145px","right": "-66px"});
+		SS.style(this.affiche, {"width" : "50%", "float" : "left", "fontSize" : "10px", "position": "relative","top": "-150px","right": "-82px"});
 		this.stage.appendChild(this.affiche);
 	}		
 }
