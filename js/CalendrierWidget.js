@@ -35,6 +35,7 @@ class CalenderView extends WidgetView {
 	
 	constructor() {
 		super();
+		this.dateList = [];
 	}
 	
 	setUp() {
@@ -47,7 +48,30 @@ class CalenderView extends WidgetView {
 		this.affiche.textContent = a;
 		console.log(this.affiche.textContent);
 		HH.attr(this.affiche,{"href":"https://fr.wikipedia.org/wiki/"+b});
-}
+	}
+	updateFooter(){
+		if(this.recall(this.dateList))
+			this.footer.backgroundColor = "#0AFF0B";
+	}
+	
+	addRecall(weekDay, day, month, year){
+		// weekDay (1 - 7), month (0 - 11)
+		this.dateList.push([weeakDay, day, month, year]);
+		this.updateFooter();
+	}
+		
+	recall(dates){
+		for(let date of dates){
+			let test = true;
+			for(let i= 0; i < this.try.date.length; i++){
+				if(date[i] != this.try.date[i])
+					test = false;
+			if(test == true)
+				return true;	
+		}
+		return false;
+	}
+		
 	draw() {
 		super.draw();
        SS.style(this.header,{"backgroundColor": "red"});
@@ -56,6 +80,7 @@ class CalenderView extends WidgetView {
       let a = new Date();
       //jour 25 mois année
 		this.try.date= [days[a.getDay() -1],a.getDate(),months[a.getMonth()],a.getFullYear()];
+		
 		this.b = HH.create("div");
 		this.b.textContent = ""+this.try.date[1] //+ this.try.date[1] + this.try.date[2];
 		SS.style(this.b,{"fontSize":"80px","width" : "50%","textAlign":"center","height":"150px", "line-height" : "95px" });
