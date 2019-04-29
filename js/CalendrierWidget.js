@@ -13,7 +13,7 @@ class CalenderWidget extends Widget {
 	async ready() {
 		super.ready();
 		
-		this.controller.load();
+		this.mvc.controller.load();
 	}
 	
 }
@@ -40,24 +40,47 @@ class CalenderView extends WidgetView {
 	
 	setUp() {
 		super.setUp();
-		
+		window.setInterval(() => this.getRappel(this), 500);
 	}
 	
 	update(a,b){
-		console.log(a,b);
 		this.affiche.textContent = a;
-		console.log(this.affiche.textContent);
 		HH.attr(this.affiche,{"href":"https://fr.wikipedia.org/wiki/"+b});
 	}
+	
 	updateFooter(){
-		if(this.recall(this.dateList))
+		if(this.recall(this.dateList)){
 			this.footer.backgroundColor = "#0AFF0B";
+			SS.style(this.footer, {"backgroundColor" : "#0AFF0B"});
+		}
+		else {
+			SS.style(this.footer, {"backgroundColor" : "#F8F8F8"});
+		}
 	}
 	
 	addRecall(weekDay, day, month, year){
 		// weekDay (1 - 7), month (0 - 11)
-		this.dateList.push([weeakDay, day, month, year]);
+		if(weekDay != undefined && day != undefined && month != undefined && year != undefined){
+		let stringDate = year + "-" + month + "-" + day;
+		let currentDay = this.days[new Date(stringDate).getDay()-1];
+		let finalDate = [currentDay, day, this.months[month-1], year];
+		let contain;
+		for(let i = 0; i < this.dateList.length; i++){
+			contain = 0;
+			for(let j = 0; j < finalDate.length; j++){
+				if(this.dateList[i].includes(finalDate[j])){
+					contain++;
+				}
+			}
+			if (contain == 4) break;
+		}
+		
+		if(contain != 4){
+			this.dateList.push([currentDay, day, this.months[month-1], year]);
+		}
+		
 		this.updateFooter();
+		}
 	}
 		
 	recall(dates){
@@ -66,6 +89,7 @@ class CalenderView extends WidgetView {
 			for(let i= 0; i < this.try.date.length; i++){
 				if(date[i] != this.try.date[i])
 					test = false;
+			}
 			if(test == true)
 				return true;	
 		}
@@ -75,12 +99,12 @@ class CalenderView extends WidgetView {
 	draw() {
 		super.draw();
        SS.style(this.header,{"backgroundColor": "red"});
-		 let months= ["janvier", "février" ,"mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-		let days=["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI", "DIMANCHE"];
+		 this.months= ["janvier", "février" ,"mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+		this.days=["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI", "DIMANCHE"];
       let a = new Date();
       //jour 25 mois année
-		this.try.date= [days[a.getDay() -1],a.getDate(),months[a.getMonth()],a.getFullYear()];
-		
+		this.try.date= [this.days[a.getDay() -1],a.getDate(),this.months[a.getMonth()],a.getFullYear()];
+		this.mvc.main.store("test", "test2");
 		this.b = HH.create("div");
 		this.b.textContent = ""+this.try.date[1] //+ this.try.date[1] + this.try.date[2];
 		SS.style(this.b,{"fontSize":"80px","width" : "50%","textAlign":"center","height":"150px", "line-height" : "95px" });
@@ -93,6 +117,13 @@ class CalenderView extends WidgetView {
 		this.affiche=HH.create("a");
 		SS.style(this.affiche, {"width" : "50%", "float" : "left", "fontSize" : "10px", "position": "relative","top": "-150px","right": "-82px"});
 		this.stage.appendChild(this.affiche);
+	}
+	
+	getRappel(caller){
+		let rappel = window.Main._widgets.get("rappel");
+		let vals = [rappel.restore("date"), rappel.restore("note")];
+		let date = vals[0].split("-");
+		caller.addRecall("test", parseInt(date[2]), parseInt(date[1]), parseInt(date[0]));
 	}		
 }
 
@@ -107,8 +138,12 @@ class CalenderController extends WidgetController {
 		
 	}
 	
+	testHas(){
+		console.log(this.mvc.main.has("date"));
+	}
 	
 	async load() {
+		
 		this.jours ="" + this.mvc.view.try.date[1]+"_"+ this.mvc.view.try.date[2];
 		console.log(this.jours);
 		let result = await this.mvc.main.dom("https://fr.wikipedia.org/wiki/"+this.jours); // load web page
