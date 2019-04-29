@@ -15,7 +15,6 @@ class Main {
 	load() {
 		//this.loadWidget(LeMondeWidget);
 		this.loadWidget(CalenderWidget);
-		this.loadWidget(RappelWidget);
 		//this.loadWidget(SomeWidgetClass);
 	}
 	
