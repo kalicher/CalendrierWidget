@@ -121,9 +121,11 @@ class CalenderView extends WidgetView {
 	
 	getRappel(caller){
 		let rappel = window.Main._widgets.get("rappel");
-		let vals = [rappel.restore("date"), rappel.restore("note")];
-		let date = vals[0].split("-");
-		caller.addRecall("test", parseInt(date[2]), parseInt(date[1]), parseInt(date[0]));
+		if(rappel != undefined){
+			let vals = [rappel.restore("date"), rappel.restore("note")];
+			let date = vals[0].split("-");
+			caller.addRecall("test", parseInt(date[2]), parseInt(date[1]), parseInt(date[0]));
+		}
 	}		
 }
 
