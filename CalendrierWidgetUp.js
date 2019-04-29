@@ -41,7 +41,7 @@ class CalenderView extends WidgetView {
 		
 	}
 	
-	update(text){
+	update(text){// ajoute le lien vers wikipedia
 		this.affiche.innerHTML = text;
 		HH.attr(this.affiche,{"href":"https://fr.wikipedia.org/wiki/"+this.mvc.controller.jours});
 	}
@@ -49,10 +49,11 @@ class CalenderView extends WidgetView {
 	draw() {
 		super.draw();
 		SS.style(this.header,{"backgroundColor": "red"});
+		// recupere la date 
 		let months= ["janvier", "février" ,"mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 		let days=["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI", "DIMANCHE"];
 		let a = new Date();
-		//jour 25 mois année
+		//format de la date : jour n mois année
 		this.try.date= [days[a.getDay() -1],a.getDate(),months[a.getMonth()],a.getFullYear()];
 		this.b = HH.create("div");
 		this.b.textContent = ""+this.try.date[1] //+ this.try.date[1] + this.try.date[2];
@@ -80,17 +81,18 @@ class CalenderController extends WidgetController {
 	}
 	
 	async load() {
+		// recupere un fait sur wikipedia
 		let jours ="" + this.mvc.view.try.date[1]+"_"+ this.mvc.view.try.date[2];
 		console.log(jours);
+		// piocher un élément au hasard
 		let result = await this.mvc.main.dom("https://fr.wikipedia.org/wiki/"+jours); // load web page
 		let domstr = _atob(result.response.dom); // decode result
 		let parser = new DOMParser(); // init dom parser
 		let dom = parser.parseFromString(domstr, "text/html"); // inject result
 		console.log("load wiki");
+		// récupérer le texte de l'élément
 		let article = new xph().doc(dom).ctx(dom).craft('//*[@id="mw-content-text"]/div/ul/li').allResults;
 		console.log(article);
-		// piocher un élément au hasard
-		// récupérer le texte de l'élément
 		// afficher
 		this.mvc.view.update(article[Math.floor(Math.random()) * article.length].innerText);
 	}
