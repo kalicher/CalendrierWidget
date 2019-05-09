@@ -42,12 +42,12 @@ class CalenderView extends WidgetView {
 		super.setUp();
 		window.setInterval(() => this.getRappel(this), 500);
 	}
-	
+	// display date link
 	update(a,b){
 		this.affiche.textContent = a;
 		HH.attr(this.affiche,{"href":"https://fr.wikipedia.org/wiki/"+b});
 	}
-	
+	// Change color of footer
 	updateFooter(){
 		if(this.recall(this.dateList)){
 			this.footer.backgroundColor = "#0AFF0B";
@@ -57,7 +57,7 @@ class CalenderView extends WidgetView {
 			SS.style(this.footer, {"backgroundColor" : "#F8F8F8"});
 		}
 	}
-	
+	// Add a recall to array
 	addRecall(weekDay, day, month, year){
 		// weekDay (1 - 7), month (0 - 11)
 		if(weekDay != undefined && day != undefined && month != undefined && year != undefined){
@@ -82,7 +82,7 @@ class CalenderView extends WidgetView {
 		this.updateFooter();
 		}
 	}
-		
+	// check if the current date match the date set by rappelWidget
 	recall(dates){
 		for(let date of dates){
 			let test = true;
@@ -95,7 +95,7 @@ class CalenderView extends WidgetView {
 		}
 		return false;
 	}
-		
+	//Draw widget content
 	draw() {
 		super.draw();
        SS.style(this.header,{"backgroundColor": "red"});
@@ -118,7 +118,7 @@ class CalenderView extends WidgetView {
 		SS.style(this.affiche, {"width" : "50%", "float" : "left", "fontSize" : "10px", "position": "relative","top": "-150px","right": "-82px"});
 		this.stage.appendChild(this.affiche);
 	}
-	
+	// Get date from rappelWidget
 	getRappel(caller){
 		let rappel = window.Main._widgets.get("rappel");
 		if(rappel != undefined){
@@ -139,20 +139,20 @@ class CalenderController extends WidgetController {
 		super.setUp();
 		
 	}
-	
-	testHas(){
-		console.log(this.mvc.main.has("date"));
-	}
-	
+	// test
+	//testHas(){
+	//	console.log(this.mvc.main.has("date"));
+	//}
+	// get historical fact based on the current Date
 	async load() {
 		
 		this.jours ="" + this.mvc.view.try.date[1]+"_"+ this.mvc.view.try.date[2];
-		console.log(this.jours);
+		//console.log(this.jours);
 		let result = await this.mvc.main.dom("https://fr.wikipedia.org/wiki/"+this.jours); // load web page
 		let domstr = _atob(result.response.dom); // decode result
 		let parser = new DOMParser(); // init dom parser
 		let dom = parser.parseFromString(domstr, "text/html"); // inject result
-		console.log("load wiki");
+		//console.log("load wiki");
 		let article = new xph().doc(dom).ctx(dom).craft('//*[@id="mw-content-text"]/div/ul/li').allResults;
 		
 		
